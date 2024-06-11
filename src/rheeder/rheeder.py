@@ -1,5 +1,5 @@
 """Main module."""
-
+import base64
 import os
 
 
@@ -96,8 +96,8 @@ class GithubGetContentsReaderImp(ReaderImp):
         self.repo = pygithub_repo
 
     def read(self, path: str) -> str:
-        # TODO:
-        return self.repo.get_content(path)
+        content_file = self.repo.get_contents(path)
+        return base64.b64decode(content_file.content)
 
 
 class GithubCloneRepoReaderImp(ReaderImp):
