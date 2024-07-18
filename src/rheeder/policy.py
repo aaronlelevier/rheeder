@@ -33,12 +33,12 @@ class Statement(pydantic.BaseModel):
 
     # <effect_block> = "Effect" : ("Allow" | "Deny")
 
-    Sid: str = pydantic.Field(pattern=r"[A-Za-z0-9]")
+    Sid: str = pydantic.Field(default=None, pattern=r"[A-Za-z0-9]")
     Effect: typing.Literal['Allow', 'Deny']
     Resource: typing.Union[str, list[str]]
     # XOR
-    Principal: str = None
-    NotPrincipal: str = None
+    Principal: dict = None
+    NotPrincipal: dict = None
     # XOR
     Action: typing.Union[str, list[str]] = None
     NotAction: typing.Union[str, list[str]] = None
@@ -109,8 +109,8 @@ class Policy(pydantic.BaseModel):
 
     # <statement_block> = "Statement" : [ <statement>, <statement>, ... ]
 
-    Id: str = pydantic.Field(pattern=r"[A-Za-z0-9\_\-]")
-    Version: typing.Literal['2008-10-17', '2012-10-17']
+    Id: str = pydantic.Field(default=None, pattern=r"[A-Za-z0-9\_\-]")
+    Version: typing.Literal['2008-10-17', '2012-10-17']= None
     Statement: typing.Union[Statement, list[Statement]]
 
 
